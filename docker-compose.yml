@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  polarity_daemon:
+    build: .
+    container_name: polarity_daemon
+    ports:
+      - "8000:8000"
+    volumes:
+      # Mount the desktop projects folder so the daemon inside docker can access and launch local projects.
+      # WARNING: Docker desktop must have file sharing enabled for this path on Windows.
+      - /c/Users/Devansh Tyagi/Desktop/Projects:/projects
+    environment:
+      - PROJECTS_DIR=/projects
+    restart: unless-stopped

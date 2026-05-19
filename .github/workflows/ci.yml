@@ -1,0 +1,46 @@
+name: Polarity CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  lint-and-build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+        cache: 'npm'
+
+    - name: Install Node Dependencies
+      run: npm install
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        cache: 'pip'
+
+    - name: Install Python Dependencies
+      run: pip install -r requirements.txt
+
+    - name: Python Syntax Check (Flake8)
+      run: |
+        pip install flake8
+        # Stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+
+    - name: React Native / Expo Export Build Check
+      run: npx expo export -p web
+      # This ensures the Expo project successfully compiles without throwing Metro bundler errors.
+
+    - name: CI/CD Pipeline Passed
+      run: echo "All static checks and builds passed successfully."
