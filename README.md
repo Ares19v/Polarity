@@ -82,3 +82,8 @@ Your GitHub Personal Access Token (PAT) is never transmitted to any third-party 
 ---
 
 *Engineered for high-performance development environments.*
+
+---
+<p align="center">
+  Made by Devansh Tyagi @ 2026
+</p>
