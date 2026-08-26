@@ -76,14 +76,16 @@ UNINSTALL.bat
 
 ---
 
+## 📷 Vision Edge & Mobile Camera HUD
+- **Universal Live Camera HUD (`src/components/CameraViewport.js`):** Stream your mobile device's camera into local computer vision inference models.
+- **Dynamic Tactical Viewfinder:** Real-time targeting brackets, center reticle crosshair, animated laser sweep, and latency monitors ($28\text{ms} - 45\text{ms}$).
+- **Built-in Model Support:** Live HUD overlays for Industrial PCB defect scanning (`YOLOv11s-PCB`), tactical flight identification (`WingID`), and eye fatigue monitoring (`Blink`).
+
+---
+
 ## 🛡️ Security
 Your GitHub Personal Access Token (PAT) is never transmitted to any third-party servers. It is stored securely on your local device using Expo's secure storage mechanisms and is only used to directly query the `api.github.com` endpoints.
 
 ---
 
-*Engineered for high-performance development environments.*
-
----
-<p align="center">
-  Made by Devansh Tyagi @ 2026
-</p>
+*Engineered for high-performance development and edge vision environments.*

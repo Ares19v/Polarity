@@ -1,21 +1,15 @@
-### ⏱️ Your 30-Second Start-Up Routine for Polarity:
+### ⏱️ Quick Start-Up Routine for Polarity:
 
-#### **Step 1: Boot your Virtual Phone**
-1. Open **Android Studio** on your laptop.
-2. Open the **Device Manager** (Virtual Device Manager).
-3. Click the green **"Play" (Launch)** button next to your virtual phone to boot it up! (Wait 10 seconds for it to show the home screen).
+#### **Step 1: Boot your Android Emulator / Connect Device**
+1. Open **Android Studio** and launch your virtual device via Device Manager (or connect a physical device via USB debugging).
 
 #### **Step 2: Start the Server & Load on Phone**
-1. Open your terminal/IDE in your project folder (`C:\Users\Devansh Tyagi\Desktop\Projects\Polarity`).
-2. Run this single command:
-   ```
+1. Open your terminal in the `Polarity` project directory.
+2. Run:
+   ```bash
    npm run android
    ```
-   *Expo will boot up the project code server, detect your running virtual phone, and immediately launch the native Polarity app inside it!*
+   *Expo will boot the Metro server, connect to your Android device/emulator, and launch the native Polarity app!*
 
-#### **Step 3: Open your Browser Preview**
-1. Open Google Chrome.
-2. Go to:
-   ```
-   http://localhost:8081
-   ```
+#### **Step 3: Web Preview (Optional)**
+1. Open your browser to `http://localhost:8081` to view or debug the bundle.

@@ -1,29 +1,27 @@
-import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Platform, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, Platform, ScrollView, Modal } from 'react-native';
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { SPACING, FONTS } from '../styles/theme';
 import { useTheme } from '../styles/ThemeContext';
 
-// We import the sub-components to render inside the hub
+// Import sub-components and Camera Viewport
 import Blink from './Blink';
 import PCBScanner from './PCBScanner';
 import WingID from './WingID';
+import CameraViewport from './CameraViewport';
 
 export default function ComputerVisionHub({ activeTab, onTabChange }) {
   const { theme } = useTheme();
+  const [cameraModalVisible, setCameraModalVisible] = useState(false);
+  const [cameraInitialMode, setCameraInitialMode] = useState('inspection_engine');
+
+  const openCamera = (mode = 'inspection_engine') => {
+    setCameraInitialMode(mode);
+    setCameraModalVisible(true);
+  };
 
   // Database of Computer Vision Node Cards
   const CV_PROJECTS = [
-    {
-      id: 'blink',
-      title: 'Blink',
-      subtitle: 'Fatigue Monitor',
-      icon: 'eye',
-      iconType: 'feather',
-      color: theme.accentSecondary,
-      status: '[ONLINE]',
-      progress: 0.28,
-    },
     {
       id: 'inspection_engine',
       title: 'Inspection Engine',
@@ -44,23 +42,79 @@ export default function ComputerVisionHub({ activeTab, onTabChange }) {
       status: '[ONLINE]',
       progress: 0.65,
     },
+    {
+      id: 'blink',
+      title: 'Blink',
+      subtitle: 'Fatigue Monitor',
+      icon: 'eye',
+      iconType: 'feather',
+      color: theme.accentSecondary,
+      status: '[ONLINE]',
+      progress: 0.28,
+    },
   ];
 
   // Render the Selection Dashboard Hub
   if (activeTab === 'hub') {
     return (
       <View style={[styles.hubContainer, { backgroundColor: theme.background }]}>
+        {/* Fullscreen Camera Modal */}
+        <Modal
+          visible={cameraModalVisible}
+          animationType="slide"
+          transparent={false}
+          onRequestClose={() => setCameraModalVisible(false)}
+        >
+          <CameraViewport
+            initialMode={cameraInitialMode}
+            onClose={() => setCameraModalVisible(false)}
+          />
+        </Modal>
+
         {/* Futuristic Hub Header */}
         <View style={styles.hubHeader}>
           <View>
-            <Text style={[styles.hubTitle, { color: theme.textPrimary }]}>ACTIVE NODES</Text>
-            <Text style={[styles.hubSubtitle, { color: theme.textSecondary }]}>Select an edge module to interface</Text>
+            <Text style={[styles.hubTitle, { color: theme.textPrimary }]}>VISION EDGE NODES</Text>
+            <Text style={[styles.hubSubtitle, { color: theme.textSecondary }]}>Real-time camera inference & diagnostics</Text>
           </View>
           <View style={[styles.activePulseRow, { backgroundColor: theme.surface, borderColor: theme.border }]}>
             <View style={[styles.activePulse, { backgroundColor: theme.accent }]} />
             <Text style={[styles.activePulseText, { color: theme.accent }]}>3 DEPLOYED</Text>
           </View>
         </View>
+
+        {/* Live Phone Camera Launch Banner */}
+        <TouchableOpacity
+          style={[
+            styles.cameraBanner,
+            {
+              backgroundColor: theme.surface,
+              borderColor: theme.accent,
+              shadowColor: theme.glow,
+              shadowOpacity: theme.mode === 'cyberpunk' ? 0.4 : 0,
+              shadowRadius: 10,
+            }
+          ]}
+          onPress={() => openCamera('inspection_engine')}
+        >
+          <View style={styles.cameraBannerLeft}>
+            <View style={[styles.cameraBannerIconBox, { backgroundColor: `${theme.accent}18` }]}>
+              <Feather name="camera" size={18} color={theme.accent} />
+            </View>
+            <View style={{ marginLeft: SPACING.md }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Text style={[styles.cameraBannerTitle, { color: theme.textPrimary }]}>LIVE PHONE CAMERA HUD</Text>
+                <View style={[styles.liveBadge, { backgroundColor: `${theme.danger}20`, borderColor: theme.danger }]}>
+                  <Text style={[styles.liveBadgeText, { color: theme.danger }]}>LIVE</Text>
+                </View>
+              </View>
+              <Text style={[styles.cameraBannerDesc, { color: theme.textSecondary }]}>
+                Stream phone camera → local YOLO GPU inference
+              </Text>
+            </View>
+          </View>
+          <Feather name="chevron-right" size={18} color={theme.accent} />
+        </TouchableOpacity>
 
         {/* Scrollable Card-Box Grid */}
         <ScrollView style={styles.scrollGrid} showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollGridContent}>
@@ -89,8 +143,11 @@ export default function ComputerVisionHub({ activeTab, onTabChange }) {
                       <MaterialCommunityIcons name={project.icon} size={14} color={project.color} />
                     )}
                   </View>
-                  <TouchableOpacity style={styles.settingsAccessory}>
-                    <Feather name="sliders" size={11} color={theme.textSecondary} />
+                  <TouchableOpacity
+                    style={styles.settingsAccessory}
+                    onPress={() => openCamera(project.id)}
+                  >
+                    <Feather name="camera" size={12} color={project.color} />
                   </TouchableOpacity>
                 </View>
 
@@ -144,6 +201,19 @@ export default function ComputerVisionHub({ activeTab, onTabChange }) {
   // Render Inner Screens with the Control Panel Header
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
+      {/* Fullscreen Camera Modal */}
+      <Modal
+        visible={cameraModalVisible}
+        animationType="slide"
+        transparent={false}
+        onRequestClose={() => setCameraModalVisible(false)}
+      >
+        <CameraViewport
+          initialMode={activeTab}
+          onClose={() => setCameraModalVisible(false)}
+        />
+      </Modal>
+
       {/* Back Navigation Bar */}
       <View style={[styles.backHeaderBar, { backgroundColor: theme.background, borderColor: theme.border }]}>
         <TouchableOpacity style={styles.backBtn} onPress={() => onTabChange('hub')}>
@@ -158,16 +228,21 @@ export default function ComputerVisionHub({ activeTab, onTabChange }) {
         </View>
       </View>
 
-      {/* Local Deploy Control Panel */}
+      {/* Local Deploy & Camera Control Panel */}
       <View style={[styles.deployPanel, { backgroundColor: theme.surface, borderBottomColor: theme.border }]}>
-        <TouchableOpacity style={[styles.deployBtn, { backgroundColor: `${theme.accent}15`, borderColor: theme.accent }]}>
-          <Feather name="play-circle" size={12} color={theme.accent} />
-          <Text style={[styles.deployBtnText, { color: theme.accent }]}>DEPLOY NODE</Text>
+        <TouchableOpacity
+          style={[styles.deployBtn, { backgroundColor: `${theme.accent}20`, borderColor: theme.accent }]}
+          onPress={() => openCamera(activeTab)}
+        >
+          <Feather name="camera" size={12} color={theme.accent} />
+          <Text style={[styles.deployBtnText, { color: theme.accent }]}>CAMERA HUD</Text>
         </TouchableOpacity>
+
         <TouchableOpacity style={[styles.deployBtn, { backgroundColor: `${theme.textSecondary}10`, borderColor: theme.border, marginLeft: SPACING.sm }]}>
           <Feather name="refresh-cw" size={12} color={theme.textPrimary} />
-          <Text style={[styles.deployBtnText, { color: theme.textPrimary }]}>SYNC & DEPLOY</Text>
+          <Text style={[styles.deployBtnText, { color: theme.textPrimary }]}>SYNC NODE</Text>
         </TouchableOpacity>
+
         <View style={{ flex: 1 }} />
         <Feather name="shield" size={14} color={theme.accent} style={{ opacity: 0.8 }} />
       </View>
@@ -195,7 +270,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginTop: Platform.OS === 'ios' ? SPACING.xs : SPACING.sm,
-    marginBottom: SPACING.lg,
+    marginBottom: SPACING.md,
   },
   hubTitle: {
     fontSize: 13,
@@ -222,6 +297,47 @@ const styles = StyleSheet.create({
   },
   activePulseText: {
     fontSize: 7.5,
+    fontWeight: FONTS.weightBold,
+    letterSpacing: 0.5,
+  },
+  cameraBanner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderWidth: 1,
+    borderRadius: 12,
+    padding: 12,
+    marginBottom: SPACING.md,
+  },
+  cameraBannerLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  cameraBannerIconBox: {
+    width: 36,
+    height: 36,
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  cameraBannerTitle: {
+    fontSize: 11,
+    fontWeight: FONTS.weightBold,
+    letterSpacing: 1,
+  },
+  cameraBannerDesc: {
+    fontSize: 8.5,
+    marginTop: 2,
+  },
+  liveBadge: {
+    borderWidth: 1,
+    borderRadius: 4,
+    paddingHorizontal: 5,
+    paddingVertical: 1,
+    marginLeft: 6,
+  },
+  liveBadgeText: {
+    fontSize: 7,
     fontWeight: FONTS.weightBold,
     letterSpacing: 0.5,
   },
@@ -259,8 +375,10 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
   },
   settingsAccessory: {
-    width: 20,
-    height: 20,
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
     justifyContent: 'center',
     alignItems: 'center',
   },

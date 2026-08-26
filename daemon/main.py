@@ -14,12 +14,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-PROJECTS_DIR = r"C:\Users\Devansh Tyagi\Desktop\Projects"
-GITHUB_USER = "Ares19v"
+PROJECTS_DIR = os.getenv("PROJECTS_DIR", os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
+GITHUB_USER = os.getenv("GITHUB_USER", "")
 
 @app.get("/")
 def health_check():
-    return {"status": "online", "message": "Polarity Daemon is running on HP Omen"}
+    return {"status": "online", "message": "Polarity Daemon is running"}
 
 @app.get("/telemetry")
 def get_telemetry():
@@ -73,6 +73,8 @@ def clone_project(repo_name: str):
         return {"status": "ignored", "message": "Folder already exists."}
     
     try:
+        if not GITHUB_USER:
+            raise HTTPException(status_code=400, detail="GITHUB_USER environment variable not configured.")
         clone_url = f"https://github.com/{GITHUB_USER}/{repo_name}.git"
         # subprocess.run(["git", "clone", clone_url], cwd=PROJECTS_DIR, check=True)
         return {"status": "success", "message": f"Successfully cloned {repo_name}"}
