@@ -10,7 +10,6 @@
 [![Expo](https://img.shields.io/badge/Expo-51+-000020?style=for-the-badge&logo=expo&logoColor=white)](https://expo.dev/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com/)
 [![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
 <p align="center">
   <b>A unified cross-platform command center (iOS / Android / Web) with dual-theme HUD, real-time GitHub CI/CD build status tracking, and a background Python edge daemon for managing local AI nodes and machine telemetry.</b>
@@ -84,6 +83,6 @@ npx expo start
 
 ---
 
-## ?? License
+© 2025 Devansh Tyagi (Ares19v). All Rights Reserved.
 
-Distributed under the MIT License. See `LICENSE` for details.
+Unauthorized copying, modification, distribution, or use of this project or any of its components, in whole or in part, without explicit written permission from the author is strictly prohibited.
