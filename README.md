@@ -3,6 +3,9 @@
 # ?? Polarity
 ### Centralized Developer Mission Control & Local AI Edge Daemon Orchestrator
 
+[![CI](https://github.com/Ares19v/Polarity/actions/workflows/ci.yml/badge.svg)](https://github.com/Ares19v/Polarity/actions/workflows/ci.yml)
+
+
 [![React Native](https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactnative.dev/)
 [![Expo](https://img.shields.io/badge/Expo-51+-000020?style=for-the-badge&logo=expo&logoColor=white)](https://expo.dev/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com/)
