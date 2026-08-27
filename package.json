@@ -19,5 +19,6 @@
     "react-native-svg": "15.12.1",
     "react-native-web": "^0.21.0"
   },
-  "private": true
+  "private": true,
+  "description": "Developer mission control featuring a cross-platform React Native HUD and a local Python system monitoring daemon."
 }

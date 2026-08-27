@@ -1,91 +1,86 @@
-# 🌌 Polarity
+<div align="center">
 
-> **A centralized developer Mission Control suite featuring a dual-theme UI, real-time GitHub CI/CD tracking, and a local Python daemon for orchestrating AI/ML edge nodes.**
+# ?? Polarity
+### Centralized Developer Mission Control & Local AI Edge Daemon Orchestrator
 
 [![React Native](https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactnative.dev/)
+[![Expo](https://img.shields.io/badge/Expo-51+-000020?style=for-the-badge&logo=expo&logoColor=white)](https://expo.dev/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com/)
-[![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org/)
-[![Docker](https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white)](https://docker.com/)
+[![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
-Polarity acts as the ultimate operations center for local software development. It bridges the gap between your physical machine and your development environment by utilizing a lightweight Python `FastAPI` daemon that allows a beautiful React Native (Expo) dashboard to execute local terminal commands, launch `.bat` scripts, clone repositories, and synchronize with GitHub CI/CD.
+<p align="center">
+  <b>A unified cross-platform command center (iOS / Android / Web) with dual-theme HUD, real-time GitHub CI/CD build status tracking, and a background Python edge daemon for managing local AI nodes and machine telemetry.</b>
+</p>
 
----
-
-## ✨ Key Features
-
-1. **Dual-Theme Aesthetic Engine**
-   - **Minimalist Mode (Matte & Mint):** An ultra-clean, data-dense interface utilizing matte obsidian backgrounds, thin vector borders, and sophisticated mint-teal accents.
-   - **Cyberpunk Mode (Neon & Violet):** A highly ambient, visually stunning tactical interface leveraging deep purple glassmorphism, hot-pink/cyan HSL glows, and high-radius shadows.
-2. **Local Python Daemon (`daemon/`)**
-   - A lightweight `FastAPI` server that acts as a bridge. It allows the Polarity mobile/web UI to execute local `git pull` commands, launch local `.bat` scripts, and clone new repositories from GitHub directly to your disk.
-3. **Logistics & Pipeline Health**
-   - Integrates directly with the GitHub API to fetch real-time CI/CD workflow runs.
-   - Securely stores your Personal Access Token (PAT) locally on your device via Expo `SecureStore`.
-4. **Operations Center Dashboard**
-   - Features a mock hardware telemetry readout (CPU, FAN, VRAM) and a live market sentiment NLP ticker tape.
-   - Quick-launch grid for instant access to flagship AI/ML edge nodes.
+</div>
 
 ---
 
-## 🏗️ Architecture
+## ?? Overview
 
-Polarity is split into two interconnected layers:
-1. **Frontend (Expo/React Native):** The UI dashboard. It runs in the browser or on an Android/iOS emulator.
-2. **Backend Daemon (Python/FastAPI):** A local system server (`daemon/main.py`) that runs on `localhost:8000`. It listens for commands from the frontend to trigger local subprocesses.
+**Polarity** combines an ultra-slick React Native / Expo mobile & desktop interface with a local FastAPI system daemon. Designed for developers managing multiple AI/ML repositories, training runs, and containerized services, Polarity gives you an instant birds-eye view of your development infrastructure from your workstation or mobile device.
 
 ---
 
-## 🚀 Quick Start (Local Execution)
+## ? Key Features
 
-### Prerequisites
-- Node.js (v18+)
-- Python 3.9+
-- Android Studio (optional, for emulator testing)
+- **Cross-Platform HUD (Mobile, Tablet, Desktop Web)**: Built with React Native and Expo for fluid native 60fps animations, customizable widget grids, and haptic feedback.
+- **Dual-Theme High-Contrast System**: Instant toggle between high-tech Cyberpunk Dark and Clean Minimalist Light interfaces.
+- **Local AI Daemon (`daemon/main.py`)**: Lightweight background service monitoring local GPU thermals, VRAM consumption, Ollama/llama.cpp inference nodes, and Docker containers.
+- **Live GitHub CI/CD & Repository Tracker**: Embedded GitHub API polling for commit histories, workflow run statuses, and automated build alerts.
+- **Automated Windows Service Scripts**: One-click installation and background execution via `INSTALL.bat` and `Run_Project.bat`.
 
-### Installation
-You can instantly install all dependencies by running the provided batch script:
-```bash
-INSTALL.bat
+---
+
+## ??? Architecture & Tech Stack
+
 ```
-
-### Launching Mission Control
-To boot both the Python Daemon and the Expo React Native UI simultaneously, run:
-```bash
-Run_Project.bat
-```
-This will automatically start the FastAPI server on port `8000` and launch the Expo Metro bundler on port `8081`.
-
----
-
-## 🐳 Docker Deployment (Daemon)
-
-To run the Python Daemon in an isolated container:
-```bash
-docker-compose up --build -d
-```
-The daemon will be accessible at `http://localhost:8000`.
-
----
-
-## 🧹 Maintenance
-
-To completely clean the project cache (removes `node_modules`, `__pycache__`, and flushes Expo):
-```bash
-UNINSTALL.bat
+Polarity/
+??? daemon/                 # Python FastAPI background orchestration daemon
+?   ??? main.py             # System telemetry & local AI node monitoring API
+??? src/                    # React Native Expo frontend application
+?   ??? components/         # Mission control cards, HUD gauges, telemetry charts
+?   ??? navigation/         # Tab & stack navigation handlers
+?   ??? services/           # GitHub API & daemon socket clients
+??? assets/                 # Adaptive icons, splash screens, and HUD graphics
+??? App.js                  # Application entry point
+??? app.json                # Expo configuration and permissions
+??? requirements.txt        # Daemon Python dependencies
+??? INSTALL.bat             # Quick environment setup script
+??? Run_Project.bat         # Automated daemon + UI launcher
+??? package.json            # Expo dependencies
 ```
 
 ---
 
-## 📷 Vision Edge & Mobile Camera HUD
-- **Universal Live Camera HUD (`src/components/CameraViewport.js`):** Stream your mobile device's camera into local computer vision inference models.
-- **Dynamic Tactical Viewfinder:** Real-time targeting brackets, center reticle crosshair, animated laser sweep, and latency monitors ($28\text{ms} - 45\text{ms}$).
-- **Built-in Model Support:** Live HUD overlays for Industrial PCB defect scanning (`YOLOv11s-PCB`), tactical flight identification (`WingID`), and eye fatigue monitoring (`Blink`).
+## ?? Quick Start
+
+### 1. Start the Local Python Telemetry Daemon
+
+```bash
+# In the project root
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+python daemon/main.py
+```
+*The daemon starts on `http://127.0.0.1:8000`.*
+
+### 2. Start the Expo Frontend Application
+
+```bash
+# Install dependencies
+npm install
+
+# Start Expo development server
+npx expo start
+```
+- Press `w` to launch the **Web interface** in your browser.
+- Scan the QR code with the **Expo Go app** on iOS or Android for native mobile testing.
 
 ---
 
-## 🛡️ Security
-Your GitHub Personal Access Token (PAT) is never transmitted to any third-party servers. It is stored securely on your local device using Expo's secure storage mechanisms and is only used to directly query the `api.github.com` endpoints.
+## ?? License
 
----
-
-*Engineered for high-performance development and edge vision environments.*
+Distributed under the MIT License. See `LICENSE` for details.
